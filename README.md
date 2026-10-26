@@ -1,58 +1,120 @@
 # Congressional App Challenge
 
-A mental health app for the Congressional App Challenge. It is a Flutter
-mobile app with a Java HTTP API and a local Python service for AI-assisted
-daily check-ins, goal suggestions, support guidance, and progress history.
+A Flutter wellbeing app for daily check-ins, follow-up questions, goal
+suggestions, and progress tracking. The app uses a Java HTTP API, a local
+Python service, and Ollama for generated check-in content and text
+classification.
 
-## Project layout
+This is a prototype. AI-generated classifications are fallible and are not a
+diagnosis, safety assessment, or substitute for professional or emergency
+support.
 
-- `mobile/` — Flutter app for Android, iOS, web, and desktop.
-- `backend/src/App.java` — Java API server on port `8080`.
-- `backend/ai_server.py` — Python API on loopback port `5000`; Java starts it
-  when needed.
-- `backend/memory_manager.py` and `backend/support_prompts.py` — local
-  check-in summaries and support guidance.
+## Project structure
+
+- `mobile/` — Flutter app for Android, iOS, and web.
+- `backend/src/App.java` — Java HTTP API on port `8080`. It starts the Python
+  service when needed and coordinates check-in processing.
+- `backend/ai_server.py` — Python API on loopback port `5000`. It calls the
+  local Ollama API and writes check-in results.
+- `backend/memory_manager.py` — validates classifications and maintains
+  cumulative check-in counts.
+- `backend/support_prompts.py` — prepares safety guidance from the latest
+  classifications.
+
+The Java API exposes:
+
+| Method | Route | Purpose |
+| --- | --- | --- |
+| `GET` | `/api/health` | Check Java API availability |
+| `POST` | `/api/ai/start` | Start the Python service if it is not running |
+| `POST` | `/api/checkins/process` | Process a check-in and return generated results |
+| `GET` | `/api/checkins/memory` | Read cumulative classification counts |
+| `POST` | `/api/checkins/memory/update` | Recalculate counts from saved classifications |
+| `GET` | `/api/checkins/support` | Prepare support guidance |
+| `GET` | `/api/progress/history` | Read history for the app's local user ID |
 
 ## Local development
 
-Install Java, Python 3, Flutter, and Ollama. From the project root, install the
-Python dependencies:
+Install Java, Python 3, Flutter, and Ollama. Install the Python packages from
+the repository root:
 
 ```sh
 python3 -m pip install -r backend/requirements.txt
 ```
 
-Start Ollama and ensure the `llama3.1` model is installed:
+Make the `llama3.1` model available to Ollama. If the Ollama desktop service
+is not already running, start it in one terminal:
 
 ```sh
 ollama serve
+```
+
+In a second terminal, download the model:
+
+```sh
 ollama pull llama3.1
 ```
 
-In another terminal, compile and start the Java API:
+Compile and run the Java API from the repository root:
 
 ```sh
-javac -d bin backend/src/App.java
-java -cp bin App
+javac -d backend/bin backend/src/App.java
+java -cp backend/bin App
 ```
 
-The Java server must remain running while using the app. It starts the Python
-service on demand. Generated check-in history, prompts, and memory data remain
-local and are excluded from Git.
+Keep the Java process running while using the app. The Java API starts the
+Python service automatically when requested; both services need Ollama running
+locally. The Flutter app runs separately. Platform-specific device and network
+setup is documented in [mobile/README.md](mobile/README.md).
 
-For Flutter setup, Android/iOS device instructions, and physical-phone Wi-Fi
-configuration, see [mobile/README.md](mobile/README.md).
+## Data and local storage
+
+The backend writes check-in history and generated result files under `backend/`.
+History is appended to `backend/checkin_history.jsonl`; current questions,
+suggestions, classifications, goals, and memory counts are stored in local
+JSON files. These runtime files contain check-in data and are excluded from
+Git. The mobile app stores daily check-in results and the active goal queue in
+device preferences. Clearing app data removes those local mobile preferences;
+it does not remove backend history.
+
+When run as documented, check-in text is sent to the local Python service and
+Ollama server on the development computer. The backend does not provide
+centralized hosting or account synchronization.
 
 ## Tests
 
-Run the Flutter checks from the `mobile/` directory:
+From the `mobile/` directory, run:
 
 ```sh
+flutter pub get
 flutter analyze
 flutter test
 ```
 
-## AI-assisted development note
+## Development and AI assistance
 
-AI assisted with parts of the API integration and wiring. The project authors
-are responsible for reviewing and validating behavior before use.
+Except where noted below, code was authored by the developers. AI tools were
+used for development guidance, pointers, and suggestions; this does not mean
+that all project code was AI-generated.
+
+- The HTTP calls and handlers in `backend/src/App.java` were written by the
+  developers with AI assistance for development guidance. The code was not
+  generated by AI.
+- `backend/memory_manager.py` was written by the developers with AI
+  assistance for development guidance. The code was not generated by AI.
+- `mobile/lib/main.dart`, `mobile/lib/app_theme.dart`,
+  `mobile/lib/services/api.dart`, `mobile/lib/services/storage.dart`,
+  `mobile/lib/pages/settings_screen.dart`, and `mobile/web/index.html` were
+  completed by the developers.
+- `mobile/lib/pages/app_shell.dart`, `mobile/lib/pages/follow.dart`,
+  `mobile/lib/pages/goals_screen.dart`, `mobile/lib/pages/home_screen.dart`,
+  `mobile/lib/pages/progress_screen.dart`, `mobile/lib/pages/question_screen.dart`,
+  and `mobile/test/widget_test.dart` were developed by the developers with AI
+  guidance; the code was not generated by AI.
+- `mobile/lib/services/notification.dart` was generated entirely by AI because
+  the developers found its implementation difficult, then edited by the
+  developers where needed.
+
+Some debugging code and development output files from earlier stages remain in
+the project folder. Generated runtime output and local check-in data are
+ignored by Git and are not included in the repository.

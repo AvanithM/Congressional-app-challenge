@@ -1,11 +1,11 @@
 {
-    "name": "congress_app",
-    "short_name": "congress_app",
+    "name": "Congress App",
+    "short_name": "Congress App",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "A wellbeing app for daily check-ins, goals, and progress.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

@@ -1,4 +1,3 @@
-// (USER)
 import 'dart:async';
 
 import 'package:congress_app/services/api.dart';

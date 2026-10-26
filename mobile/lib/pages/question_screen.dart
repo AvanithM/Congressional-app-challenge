@@ -1,4 +1,3 @@
-// (USER+AI)
 import 'package:flutter/material.dart';
 import 'package:congress_app/services/api.dart';
 import 'package:congress_app/services/notification.dart';

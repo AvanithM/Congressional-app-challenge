@@ -2,8 +2,7 @@
 set -eu
 
 if [ "$#" -ne 2 ]; then
-  echo "Usage: sh mobile/run_android_wifi.sh <device-id> <api-base-url>" >&2
-  echo "Example: sh mobile/run_android_wifi.sh <device-id> http://<computer-wifi-ip>:8080" >&2
+  echo "Expected two arguments: the connected Android device ID and API base URL." >&2
   exit 2
 fi
 

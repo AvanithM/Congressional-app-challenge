@@ -1,8 +1,7 @@
 import hashlib
 import json
 from pathlib import Path
-#REWRITE REVIST RESTRUCTURE FOR AI
-#USED a hefty amount of AI here
+
 CLASSIFICATIONS_FILE = Path("classifications.json")
 MEMORY_FILE = Path("memory_counts.json")
 

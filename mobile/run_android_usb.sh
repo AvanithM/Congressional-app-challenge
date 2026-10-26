@@ -2,7 +2,7 @@
 set -eu
 
 if [ "$#" -ne 1 ]; then
-  echo "Usage: sh mobile/run_android_usb.sh <device-id>" >&2
+  echo "Expected one argument: the connected Android device ID." >&2
   exit 2
 fi
 

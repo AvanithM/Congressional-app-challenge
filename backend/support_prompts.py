@@ -1,7 +1,6 @@
 import json
 import sys
 from pathlib import Path
-#REWRITE REVIST AND RESTURCTURE FOR AI
 
 cFILE = Path("classifications.json")
 

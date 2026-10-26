@@ -1,4 +1,3 @@
-// (USER)
 import 'package:flutter/material.dart';
 
 const coral = Color.fromARGB(255, 14, 1, 123);

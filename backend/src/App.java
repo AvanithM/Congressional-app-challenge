@@ -13,10 +13,7 @@ import com.sun.net.httpserver.*;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URLEncoder;
-//(it's just a bunch of http calls and functions)
-//along with methods that run and call the python server.
-//which needs to still be connected to UI buttons
-//this is how the frontend communicated with the backend and vice versa
+
 public class App {
     private static final URI HEALTH_URI = URI.create("http://127.0.0.1:5000/health");
     private static final URI PROCESS_URI = URI.create("http://127.0.0.1:5000/process_input");
@@ -34,7 +31,6 @@ public class App {
     }
 
     static class apiHandler implements HttpHandler {
-        //written by me
         @Override
         public void handle(HttpExchange exchange) throws IOException {
             String path = exchange.getRequestURI().getPath();
