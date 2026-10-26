@@ -1,4 +1,12 @@
 # Congressional App Challenge
+The App was developed by:
+
+Avanith Manivassakam
+Vivek Rivera
+Ali Diwan
+Keshav Manesh
+
+All developers contributed to all parts of the project
 
 A Flutter wellbeing app for daily check-ins, follow-up questions, goal
 suggestions, and progress tracking. The app uses a Java HTTP API, a local
