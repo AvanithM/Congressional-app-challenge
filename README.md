@@ -1,8 +1,8 @@
-# Congress App
+# Congressional App Challenge
 
-A Flutter mobile app with a Java HTTP API and a local Python service for
-AI-assisted daily check-ins, goal suggestions, support guidance, and progress
-history.
+A mental health app for the Congressional App Challenge. It is a Flutter
+mobile app with a Java HTTP API and a local Python service for AI-assisted
+daily check-ins, goal suggestions, support guidance, and progress history.
 
 ## Project layout
 
